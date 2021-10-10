@@ -1,0 +1,24 @@
+.navLogo{
+    width: 100px;
+    height: 50px;
+    background-color: transparent;
+}
+
+.navbar-icon{
+    color:white;
+}
+
+.myNavbar{
+    background-color: rgba(0,0,0,0.1);
+}
+
+.searchBox{
+    background: none;
+    border: 1px solid gray ;
+    border-radius: 10px;
+    /* width: 300px; */
+}
+
+.navLink:hover{
+    color:blue
+}
