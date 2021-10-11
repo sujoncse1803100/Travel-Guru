@@ -8,6 +8,7 @@ import {
     Form
 
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     return (
@@ -31,12 +32,15 @@ const NavBar = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link className="text-white navLink" href="#">News</Nav.Link>
-                        <Nav.Link className="text-white navLink" href="#">Destination</Nav.Link>
-                        <Nav.Link className="text-white navLink" href="#" > Blog</Nav.Link>
-                        <Nav.Link className="text-white navLink" href="#" > Contact</Nav.Link>
+                        <Link className="text-white navLink" to="/home">Home</Link>
+                        <Link className="text-white navLink" to="/"> Destination</Link>
+                        <Link className="text-white navLink" to="/booking">Booking</Link>
+                        <Link className="text-white navLink" to="/">Contact</Link>
                     </Nav>
-                    <Button className="text-white bg-danger" variant="  me-2">Login</Button>
+
+                    <Link to="/login">
+                        <Button className="text-white bg-danger" variant="  me-2">Login</Button>
+                    </Link>
                 </Navbar.Collapse>
             </Navbar>
         </div>

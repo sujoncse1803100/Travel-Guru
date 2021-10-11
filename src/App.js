@@ -8,30 +8,38 @@ import {
 } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Book from './components/Book/Book';
+import CreateAccount from './components/CreateAcount/CreateAccount';
+import { createContext, useState } from 'react';
 
-
+export const UserContext = createContext();
 
 function App() {
+  const [loggedInUser, setloggedInUser] = useState({});
+
   return (
-    <div>
+    <UserContext.Provider value={[loggedInUser, setloggedInUser]}>
       <Router>
         <NavBar />
         <Switch>
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/account">
+            <CreateAccount />
           </Route>
           <Route path="/booking">
             <Book />
           </Route>
         </Switch>
-
       </Router>
 
-
-    </div>
+    </UserContext.Provider>
   );
 }
 

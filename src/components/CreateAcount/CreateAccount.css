@@ -1,0 +1,11 @@
+.myBtn{
+    border: 1px solid gray !important;
+    width: 400px !important;
+    background-color: none;
+    border-radius: 20px;
+}
+
+.myBtn img{
+    width: 20px !important;
+    height: 20px !important;
+}

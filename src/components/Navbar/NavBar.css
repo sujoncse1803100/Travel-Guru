@@ -9,7 +9,7 @@
 }
 
 .myNavbar{
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.3);
 }
 
 .searchBox{
@@ -18,7 +18,11 @@
     border-radius: 10px;
     /* width: 300px; */
 }
-
+.navLink{
+    text-decoration: none;
+    font-size:1rem;
+    margin-right: 10px;
+}
 .navLink:hover{
     color:blue
 }

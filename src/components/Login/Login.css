@@ -1,0 +1,19 @@
+.loginForm{
+    width: 450px !important;;
+    border: 1px solid black;
+    margin: 0 auto;
+}
+
+.inputForm{
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.forgotPassword{
+    text-decoration: none !important;
+}
+
+.createAccount{
+    text-decoration: none !important;
+    margin-left: 5px;
+}
