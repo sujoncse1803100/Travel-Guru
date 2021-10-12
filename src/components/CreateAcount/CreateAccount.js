@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import facebook from '../../Images/Icon/fb.png'
@@ -10,15 +10,11 @@ import {
     firebaseInitilazed, userWithEmailAndPassword
 } from './CreateAccountManager';
 import { useHistory } from 'react-router';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 firebaseInitilazed();
 
 const CreateAccount = () => {
-
-    const nameRef = useRef();
-    const emailRef = useRef();
-    const createPasswordRef = useRef();
-    const confirmPasswordRef = useRef();
 
     const [user, setUser] = useState({
         displayName: '',
@@ -36,13 +32,20 @@ const CreateAccount = () => {
 
     const handleSubmit = (e) => {
 
-        if (user.email && user.password) {
+        if (user.displayName && user.email && user.password) {
             userWithEmailAndPassword(user.displayName, user.email, user.password)
                 .then((res) => {
-                    setUser(res);
-                    setloggedInUser(res);
-                    console.log("Response : ", loggedInUser);
-                    history.push("/login");
+
+                    if (res.success) {
+                        setUser(res);
+                        setloggedInUser(res);
+                        console.log("Response : ", loggedInUser);
+                        history.push("/login");
+                    } else {
+                        const loggedInError = { ...loggedInUser };
+                        loggedInError.error = "Please enter correct email";
+                        setloggedInUser(loggedInError);
+                    }
                 })
         }
         e.preventDefault();
@@ -76,6 +79,10 @@ const CreateAccount = () => {
             const newUser = { ...user };
             newUser[e.target.name] = e.target.value;
             setUser(newUser);
+        } else {
+            const newUser = { ...user };
+            newUser[e.target.name] = '';
+            setUser(newUser);
         }
     }
 
@@ -93,7 +100,7 @@ const CreateAccount = () => {
                 style={{ width: '18rem' }}
                 onSubmit={handleSubmit}
             >
-                <h5>Create an Account</h5>
+                <h5>Create a new user account</h5>
                 <Box
                     component="form"
                     sx={{
@@ -110,8 +117,15 @@ const CreateAccount = () => {
                         name="displayName"
                         variant="standard"
                         onBlur={handleBlur}
-                        ref={nameRef}
                     />
+                    {
+                        ((!user.displayName && user.email)) &&
+                        <p style={{ color: 'green' }}>
+                            <FontAwesomeIcon style={{ color: 'red' }} className="me-2" icon={faExclamationCircle} />
+                            <span style={{ color: 'red', fontSize: '5px' }}> Please enter your name </span>
+                        </p>
+
+                    }
                     <TextField
                         required
                         id="outlined-email-input"
@@ -121,8 +135,25 @@ const CreateAccount = () => {
                         autoComplete="current-email"
                         variant="standard"
                         onBlur={handleBlur}
-                        ref={emailRef}
                     />
+
+                    {
+                        ((user.displayName && !user.email && user.createPassword) || (user.createPassword && !user.email)) &&
+                        <p style={{ color: 'green' }}>
+                            <FontAwesomeIcon style={{ color: 'red' }} className="me-2" icon={faExclamationCircle} />
+                            <span style={{ color: 'red', fontSize: '5px' }}> Please a valid email address</span>
+                        </p>
+
+                    }
+
+                    {
+                        loggedInUser.error &&
+                        <p style={{ color: 'green' }}>
+                            <FontAwesomeIcon style={{ color: 'red' }} className="me-2" icon={faExclamationCircle} />
+                            <span style={{ color: 'red', fontSize: '5px' }}> Please a valid email address</span>
+                        </p>
+
+                    }
 
                     <TextField
                         required
@@ -133,7 +164,6 @@ const CreateAccount = () => {
                         autoComplete="current-password"
                         variant="standard"
                         onBlur={handleBlur}
-                        ref={createPasswordRef}
                     />
                     <TextField
                         required
@@ -145,15 +175,28 @@ const CreateAccount = () => {
                         variant="standard"
                         size="small"
                         onBlur={handleBlur}
-                        ref={confirmPasswordRef}
                     />
                 </Box>
                 {
-                    user.password &&
-                    <p style={{ color: 'green' }}>password matched</p>
+                    user.createPassword && user.password &&
+                    <p style={{ color: 'green' }}>
+                        <FontAwesomeIcon className="me-2" icon={faCheck} />
+                        <span style={{ fontSize: '5px' }}>password matched</span>
+
+                    </p>
+
                 }
 
-                <input type="submit" className="btn mt-4 btn-danger form-control" value="Login" />
+                {
+                    user.createPassword && !user.password &&
+                    <p style={{ color: 'red' }}>
+                        <FontAwesomeIcon style={{ color: 'red' }} className="me-2" icon={faExclamationCircle} />
+                        <span style={{ color: 'red', fontSize: '5px' }}> Please match password </span>
+                    </p>
+
+                }
+
+                <input type="submit" className="btn mt-4 btn-danger form-control" value="Create account" />
                 <p className="mt-3 text-center">
                     Already have an account ?
                     <Link className="createAccount" to="/login">Login</Link>
@@ -179,7 +222,7 @@ const CreateAccount = () => {
             </div>
 
 
-        </div>
+        </div >
     );
 };
 

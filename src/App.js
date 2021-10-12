@@ -7,9 +7,10 @@ import {
   Route
 } from 'react-router-dom';
 import Login from './components/Login/Login';
-import Book from './components/Book/Book';
 import CreateAccount from './components/CreateAcount/CreateAccount';
 import { createContext, useState } from 'react';
+import Booking from './components/Booking/Booking';
+import BookingStart from './components/Booking/BookingStart';
 
 export const UserContext = createContext();
 
@@ -33,8 +34,11 @@ function App() {
           <Route path="/account">
             <CreateAccount />
           </Route>
-          <Route path="/booking">
-            <Book />
+          <Route path="/booking/:id">
+            <Booking />
+          </Route>
+          <Route path="/bookingstart/:id">
+            <BookingStart />
           </Route>
         </Switch>
       </Router>
